@@ -2,8 +2,8 @@ package co.com.bancolombia.api.config;
 
 import co.com.bancolombia.api.Handler;
 import co.com.bancolombia.api.RouterRest;
-import co.com.bancolombia.model.technology.gateways.TechnologyRepository;
-import co.com.bancolombia.usecase.registertechnology.RegisterTechnologyUseCase;
+import co.com.bancolombia.model.person.gateways.PersonRepository;
+import co.com.bancolombia.usecase.registerperson.RegisterPersonUseCase;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.webflux.test.autoconfigure.WebFluxTest;
@@ -26,13 +26,13 @@ class ConfigTest {
     @Configuration
     static class TestConfiguration {
         @Bean
-        public TechnologyRepository technologyRepository() {
-            return mock(TechnologyRepository.class);
+        public PersonRepository personRepository() {
+            return mock(PersonRepository.class);
         }
 
         @Bean
-        public RegisterTechnologyUseCase registerTechnologyUseCase(TechnologyRepository technologyRepository) {
-            return new RegisterTechnologyUseCase(technologyRepository);
+        public RegisterPersonUseCase registerPersonUseCase(PersonRepository personRepository) {
+            return new RegisterPersonUseCase(personRepository, null, null);
         }
     }
 

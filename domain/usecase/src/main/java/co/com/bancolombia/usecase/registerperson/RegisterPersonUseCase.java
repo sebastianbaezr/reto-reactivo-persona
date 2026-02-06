@@ -46,8 +46,7 @@ public class RegisterPersonUseCase {
 
     private void notifyReportAsync(Person savedPerson) {
         reportClient.notifyBootcampRegistration(savedPerson.getBootcampIds())
-            .doOnSuccess(v -> System.out.println("[RegisterPersonUseCase] Report notification completed for person ID: " + savedPerson.getId()))
-            .doOnError(error -> System.err.println("[RegisterPersonUseCase] Report notification failed: " + error.getMessage()))
+            .onErrorResume(error -> Mono.empty())
             .subscribe();
     }
 }

@@ -1,6 +1,6 @@
 package co.com.bancolombia.config;
 
-import co.com.bancolombia.model.technology.gateways.TechnologyRepository;
+import co.com.bancolombia.model.person.gateways.PersonRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.context.annotation.Bean;
@@ -34,8 +34,18 @@ class UseCasesConfigTest {
     static class TestConfig {
 
         @Bean
-        public TechnologyRepository technologyRepository() {
-            return mock(TechnologyRepository.class);
+        public PersonRepository personRepository() {
+            return mock(PersonRepository.class);
+        }
+
+        @Bean
+        public co.com.bancolombia.model.bootcamp.gateways.BootcampClient bootcampClient() {
+            return mock(co.com.bancolombia.model.bootcamp.gateways.BootcampClient.class);
+        }
+
+        @Bean
+        public co.com.bancolombia.model.report.gateways.ReportClient reportClient() {
+            return mock(co.com.bancolombia.model.report.gateways.ReportClient.class);
         }
 
         @Bean
