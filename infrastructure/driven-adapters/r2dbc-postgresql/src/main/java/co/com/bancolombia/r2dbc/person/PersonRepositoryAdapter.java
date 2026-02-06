@@ -32,6 +32,14 @@ public class PersonRepositoryAdapter extends ReactiveAdapterOperations<Person, P
     }
 
     @Override
+    public Flux<Person> findByBootcampId(Long bootcampId) {
+        return personBootcampRepository.findByBootcampId(bootcampId)
+            .flatMap(personBootcamp -> repository.findById(personBootcamp.getPersonId()))
+            .map(personData -> mapper.map(personData, Person.class))
+            .doOnError(e -> log.error("[PersonRepositoryAdapter] Error finding persons by bootcamp: {}", bootcampId, e));
+    }
+
+    @Override
     public Mono<Void> savePersonBootcamps(Long personId, List<Long> bootcampIds) {
         return isBootcampIdsValid(bootcampIds)
             .flatMap(valid -> saveBootcampRelations(personId, bootcampIds))

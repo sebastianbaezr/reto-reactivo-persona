@@ -14,5 +14,7 @@ public interface PersonRepository {
 
     Flux<Person> findAll();
 
+    Flux<Person> findByBootcampId(Long bootcampId);
+
     Mono<Void> savePersonBootcamps(Long personId, List<Long> bootcampIds);
 }

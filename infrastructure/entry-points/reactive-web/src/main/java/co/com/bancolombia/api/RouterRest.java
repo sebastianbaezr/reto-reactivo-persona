@@ -20,7 +20,9 @@ public class RouterRest {
             .andRoute(POST("/api/usecase/otherpath"), handler::listenPOSTUseCase);
 
         if (personHandler.isPresent()) {
-            router = router.andRoute(POST("/api/persons"), personHandler.get()::registerPerson);
+            router = router
+                .andRoute(POST("/api/persons"), personHandler.get()::registerPerson)
+                .andRoute(GET("/api/bootcamps/{bootcampId}/persons"), personHandler.get()::listPersonsByBootcamp);
         }
 
         return router;

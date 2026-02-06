@@ -3,6 +3,7 @@ package co.com.bancolombia.api;
 import co.com.bancolombia.api.dto.request.PersonRequest;
 import co.com.bancolombia.api.mapper.PersonMapper;
 import co.com.bancolombia.api.validation.RequestValidationService;
+import co.com.bancolombia.usecase.listpersonsbybootcamp.ListPersonsByBootcampUseCase;
 import co.com.bancolombia.usecase.registerperson.RegisterPersonUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -17,6 +18,7 @@ import reactor.core.publisher.Mono;
 public class PersonHandler {
 
     private final RegisterPersonUseCase registerPersonUseCase;
+    private final ListPersonsByBootcampUseCase listPersonsByBootcampUseCase;
     private final PersonMapper personMapper;
     private final RequestValidationService validationService;
 
@@ -29,5 +31,15 @@ public class PersonHandler {
             .flatMap(response -> ServerResponse.status(201).bodyValue(response))
             .doOnSuccess(v -> log.info("Person registered successfully"))
             .doOnError(e -> log.error("Error registering person", e));
+    }
+
+    public Mono<ServerResponse> listPersonsByBootcamp(ServerRequest request) {
+        return Mono.fromCallable(() -> Long.parseLong(request.pathVariable("bootcampId")))
+            .flatMapMany(listPersonsByBootcampUseCase::execute)
+            .map(personMapper::toSummaryResponse)
+            .collectList()
+            .flatMap(response -> ServerResponse.ok().bodyValue(response))
+            .doOnSuccess(v -> log.info("Persons listed successfully"))
+            .doOnError(e -> log.error("Error listing persons", e));
     }
 }
