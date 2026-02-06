@@ -8,6 +8,7 @@ dependencies {
     implementation project(':usecase')
     implementation project(':webflux-client')
     implementation project(':bootcamp-client-adapter')
+    implementation project(':report-client-adapter')
     implementation 'org.springframework.boot:spring-boot-starter'
     runtimeOnly('org.springframework.boot:spring-boot-devtools')
     testImplementation 'com.tngtech.archunit:archunit:1.4.1'

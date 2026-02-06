@@ -40,3 +40,5 @@ include ':webflux-client'
 project(':webflux-client').projectDir = file('./infrastructure/driven-adapters/webflux-client')
 include ':bootcamp-client-adapter'
 project(':bootcamp-client-adapter').projectDir = file('./infrastructure/driven-adapters/bootcamp-client-adapter')
+include ':report-client-adapter'
+project(':report-client-adapter').projectDir = file('./infrastructure/driven-adapters/report-client-adapter')
