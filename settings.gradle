@@ -36,3 +36,7 @@ include ':reactive-web'
 project(':reactive-web').projectDir = file('./infrastructure/entry-points/reactive-web')
 include ':r2dbc-postgresql'
 project(':r2dbc-postgresql').projectDir = file('./infrastructure/driven-adapters/r2dbc-postgresql')
+include ':webflux-client'
+project(':webflux-client').projectDir = file('./infrastructure/driven-adapters/webflux-client')
+include ':bootcamp-client-adapter'
+project(':bootcamp-client-adapter').projectDir = file('./infrastructure/driven-adapters/bootcamp-client-adapter')

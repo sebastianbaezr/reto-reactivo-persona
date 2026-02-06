@@ -14,13 +14,13 @@ import static org.springframework.web.reactive.function.server.RouterFunctions.r
 @Configuration
 public class RouterRest {
     @Bean
-    public RouterFunction<ServerResponse> routerFunction(Handler handler, Optional<TechnologyHandler> technologyHandler) {
+    public RouterFunction<ServerResponse> routerFunction(Handler handler, Optional<PersonHandler> personHandler) {
         var router = route(GET("/api/usecase/path"), handler::listenGETUseCase)
             .andRoute(GET("/api/otherusercase/path"), handler::listenGETOtherUseCase)
             .andRoute(POST("/api/usecase/otherpath"), handler::listenPOSTUseCase);
 
-        if (technologyHandler.isPresent()) {
-            router = router.andRoute(POST("/api/technologies"), technologyHandler.get()::registerTechnology);
+        if (personHandler.isPresent()) {
+            router = router.andRoute(POST("/api/persons"), personHandler.get()::registerPerson);
         }
 
         return router;
