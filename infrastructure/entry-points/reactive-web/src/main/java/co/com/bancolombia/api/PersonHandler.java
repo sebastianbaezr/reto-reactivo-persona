@@ -23,7 +23,7 @@ public class PersonHandler {
     public Mono<ServerResponse> registerPerson(ServerRequest request) {
         return request.bodyToMono(PersonRequest.class)
             .flatMap(validationService::validate)
-            .map(personMapper::toEntity)
+            .map(personMapper::toDomain)
             .flatMap(registerPersonUseCase::execute)
             .map(personMapper::toResponse)
             .flatMap(response -> ServerResponse.status(201).bodyValue(response))

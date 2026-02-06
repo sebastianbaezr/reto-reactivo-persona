@@ -10,7 +10,7 @@ import org.mapstruct.Mapping;
 public interface PersonMapper {
 
     @Mapping(target = "id", ignore = true)
-    Person toEntity(PersonRequest request);
+    Person toDomain(PersonRequest request);
 
     PersonResponse toResponse(Person entity);
 }
