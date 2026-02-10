@@ -1,6 +1,7 @@
 package co.com.bancolombia.r2dbc.person;
 
 import co.com.bancolombia.model.person.Person;
+import co.com.bancolombia.model.person.BootcampEnrollment;
 import co.com.bancolombia.model.person.gateways.PersonRepository;
 import co.com.bancolombia.r2dbc.helper.ReactiveAdapterOperations;
 import lombok.extern.slf4j.Slf4j;
@@ -65,5 +66,15 @@ public class PersonRepositoryAdapter extends ReactiveAdapterOperations<Person, P
         return personBootcampRepository.saveRelation(personId, bootcampId)
             .doOnSuccess(v -> log.debug("[PersonRepositoryAdapter] Saved bootcamp relation - person: {}, bootcamp: {}",
                 personId, bootcampId));
+    }
+
+    @Override
+    public Mono<BootcampEnrollment> findBootcampWithMostPeople() {
+        return personBootcampRepository.findBootcampWithMostPeople()
+            .map(data -> BootcampEnrollment.builder()
+                .bootcampId(data.getBootcampId())
+                .personCount(data.getPersonCount())
+                .build())
+            .doOnError(e -> log.error("[PersonRepositoryAdapter] Error finding bootcamp with most people", e));
     }
 }

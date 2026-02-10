@@ -13,4 +13,7 @@ public interface PersonBootcampR2dbcRepository extends ReactiveCrudRepository<Pe
 
     @Query("SELECT * FROM person_bootcamps WHERE bootcamp_id = :bootcampId")
     Flux<PersonBootcampData> findByBootcampId(@Param("bootcampId") Long bootcampId);
+
+    @Query("SELECT bootcamp_id, COUNT(person_id) as person_count FROM person_bootcamps GROUP BY bootcamp_id ORDER BY person_count DESC LIMIT 1")
+    Mono<BootcampEnrollmentData> findBootcampWithMostPeople();
 }

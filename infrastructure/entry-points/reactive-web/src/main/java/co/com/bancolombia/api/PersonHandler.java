@@ -5,6 +5,7 @@ import co.com.bancolombia.api.mapper.PersonMapper;
 import co.com.bancolombia.api.validation.RequestValidationService;
 import co.com.bancolombia.usecase.listpersonsbybootcamp.ListPersonsByBootcampUseCase;
 import co.com.bancolombia.usecase.registerperson.RegisterPersonUseCase;
+import co.com.bancolombia.usecase.getbootcampwithmostpeople.GetBootcampWithMostPeopleUseCase;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -19,6 +20,7 @@ public class PersonHandler {
 
     private final RegisterPersonUseCase registerPersonUseCase;
     private final ListPersonsByBootcampUseCase listPersonsByBootcampUseCase;
+    private final GetBootcampWithMostPeopleUseCase getBootcampWithMostPeopleUseCase;
     private final PersonMapper personMapper;
     private final RequestValidationService validationService;
 
@@ -41,5 +43,13 @@ public class PersonHandler {
             .flatMap(response -> ServerResponse.ok().bodyValue(response))
             .doOnSuccess(v -> log.info("Persons listed successfully"))
             .doOnError(e -> log.error("Error listing persons", e));
+    }
+
+    public Mono<ServerResponse> getBootcampWithMostPeople(ServerRequest request) {
+        return getBootcampWithMostPeopleUseCase.execute()
+            .map(personMapper::toEnrollmentResponse)
+            .flatMap(response -> ServerResponse.ok().bodyValue(response))
+            .doOnSuccess(v -> log.info("Bootcamp with most people fetched successfully"))
+            .doOnError(e -> log.error("Error fetching bootcamp with most people", e));
     }
 }

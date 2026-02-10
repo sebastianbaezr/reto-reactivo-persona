@@ -22,7 +22,8 @@ public class RouterRest {
         if (personHandler.isPresent()) {
             router = router
                 .andRoute(POST("/api/persons"), personHandler.get()::registerPerson)
-                .andRoute(GET("/api/bootcamps/{bootcampId}/persons"), personHandler.get()::listPersonsByBootcamp);
+                .andRoute(GET("/api/bootcamps/{bootcampId}/persons"), personHandler.get()::listPersonsByBootcamp)
+                .andRoute(GET("/api/persons/bootcamp-with-most-people"), personHandler.get()::getBootcampWithMostPeople);
         }
 
         return router;
